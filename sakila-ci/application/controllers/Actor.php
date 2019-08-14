@@ -33,12 +33,29 @@ class Actor extends CI_Controller {
 		exit;
 	}
 
+	public function get()
+	{
+		$actor = $this->input->post('actor');
+		$data = array();
+		$this->db->where('actor_id', $actor['actor_id']);
+		$$query = $this->db->get('actor');
+		$data = $query->row();
+
+		$dataRes['result'] = 1;
+		$dataRes['actor'] = $data;
+
+		$this->ci->output
+        ->set_status_header(200)
+        ->set_content_type('application/json', 'utf-8')
+        ->set_output(json_encode($dataRes, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES))
+        ->_display();
+		exit;
+	}
+
 	public function insert()
 	{
-		$actor = $this->input->post();
-		$data = {}
-		$data
-		var_dump($actor);exit;
+		$actor = $this->input->post('actor');
+		$data = array();
 		
 		$this->db->insert('actor', $actor);
 		$dataRes['result'] = 1;		

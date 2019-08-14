@@ -11,6 +11,9 @@
                             <button type="button" class="btn btn-default btn-sm text-center" id="btnCrear">
                                 <i class="glyphicon glyphicon-plus"></i> <br>Crear
                             </button>
+                            <button type="button" class="btn btn-default btn-sm text-center" id="btnEditar">
+                                <i class="glyphicon glyphicon-plus"></i> <br>Editar
+                            </button>
                             <button type="button" class="btn btn-default btn-sm text-center" id="btnActualizar"> 
                                 <i class="glyphicon glyphicon-refresh"></i> <br>Actualizar
                             </button>
@@ -53,7 +56,7 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="modalCrearActor" tabindex="-1" role="dialog" >
+    <div class="modal fade" id="modalCrearActor" role="dialog" >
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content ">
                 <form id="formCrearActor" action="index_submit" method="post" class="form-horizontal">
@@ -67,7 +70,7 @@
                                 <div class="form-group">
                                     <label for="actor[first_name]" class="col-md-4 control-label">Nombres:</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control"  name="actor[first_name]" placeholder="Ej. Henry">
+                                        <input type="text" class="form-control"  name="actor[first_name]" placeholder="Ej. Henry" autofocus>
                                     </div>
                                 </div>
                                 <div class="form-group">
