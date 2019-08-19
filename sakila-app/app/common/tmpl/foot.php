@@ -39,8 +39,7 @@
     <script type="text/javascript" src="public/libs/datatables/js/dataTables.fixedHeader.min.js"></script>
     <script type="text/javascript" src="public/libs/datatables/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="public/libs/datatables/js/responsive.bootstrap.min.js"></script>
-    <script type="text/javascript" src="public/components/CDatatable.js"></script>
-    <script type="text/javascript" src="public/components/CDatatablePxp.js"></script>
+    <script type="text/javascript" src="public/components/CDatatable.js"></script>    
     
     <!-- Jquery validation JS-->
     <script type="text/javascript" src="public/libs/jquery-validation/js/jquery.validate.min.js"></script>

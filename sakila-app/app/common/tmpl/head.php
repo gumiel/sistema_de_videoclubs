@@ -9,7 +9,7 @@
         <meta name="author" content="">
         <meta name="theme-color" content="#162A75" />
         <base href="http://localhost/sistema_de_videoclubs/sakila-app/">
-        <link rel="icon" href="public/images/sisjob.ico">
+        <link rel="icon" href="">
 
         <title>Componentes</title>
 

@@ -7,9 +7,7 @@ var CallRest = {
 		data: {},
 		async: true,
 	},
-	post: function(url, data, callback, m){
-		if(!m)
-			m = 0;
+	post: function(url, data, callback){
 
 		this.config.url = url;
 		this.config.data = data;
@@ -20,9 +18,13 @@ var CallRest = {
 			return callback(result);
 		})
 		.fail(function(jqXHR, textStatus, errorThrown) {
-			if(textStatus=="error" && jqXHR.status ==406)
+			
+			if(textStatus=="error")
 			{		
-				Notificacions.errors(jqXHR.responseJSON.ROOT.detalle.mensaje);
+				switch(jqXHR.status){
+					case 406:  Notificacions.errors("ERROR 406");
+					case 404:  Notificacions.errors("ERROR 404");
+				}
 			}
 		});	
 	},
@@ -35,6 +37,16 @@ var CallRest = {
 		$.ajax(this.config)
 		.done(function(result) {
 			return callback(result);
+		})
+		.fail(function(jqXHR, textStatus, errorThrown) {
+			console.log(99999);
+			if(textStatus=="error")
+			{		
+				switch(jqXHR.status){
+					case 406:  Notificacions.errors("ERROR 406");
+					case 404:  Notificacions.errors("ERROR 404");
+				}
+			}
 		});	
 	}  
 	

@@ -1,6 +1,6 @@
 function ContainerJS(elemento){
-	this.ele = $(elemento);
-	
+	this.ele = $(elemento);	
+
 	this.init = function(){ 
 		var obj = this;		
 		for (var property in obj)
@@ -31,5 +31,28 @@ function ContainerJS(elemento){
 			}
 		}
 		console.log(msg);
+	}
+
+	this.registerId = function(value, name){
+		console.log("asdasd");
+		var nameAttribute = (typeof name != 'undefined')? name: value;
+		this[nameAttribute] = this.ele.find('#'+value);		
+	};
+
+	this.registerClass = function(value, name){		
+		var nameAttribute = (typeof name != 'undefined')? name: value;
+		this[nameAttribute] = this.ele.find('.'+value);		
+	};
+
+	this.registerElement = function(value, name){			
+		if(typeof name != 'undefined'){
+			this[name] = this.ele.find(value);		
+		}		
+	};
+
+	this.registerTable = function(table, name){
+		if(typeof table == 'object' && typeof name != 'undefined'){
+			this[name] = table;		
+		}
 	}
 }

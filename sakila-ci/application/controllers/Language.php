@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Actor extends CI_Controller {
+class Language extends CI_Controller {
 
 	protected $ci;
 
@@ -20,10 +20,10 @@ class Actor extends CI_Controller {
 	public function list()
 	{
 		$dataRes = array();
-		$query = $this->db->get('actor');
+		$query = $this->db->get('language');
 		$data = $query->result();
 		$dataRes['result'] = 1;
-		$dataRes['actors'] = $data;		
+		$dataRes['languages'] = $data;		
 
 		$this->ci->output
         ->set_status_header(200)
@@ -35,15 +35,15 @@ class Actor extends CI_Controller {
 
 	public function get()
 	{
-		$actor = $this->input->post('actor');
+		$language = $this->input->post('language');
 		
 		$data = array();
-		$this->db->where('actor_id', $actor['actor_id']);
-		$query = $this->db->get('actor');
+		$this->db->where('language_id', $language['language_id']);
+		$query = $this->db->get('language');
 		$data = $query->row();
 
 		$dataRes['result'] = 1;
-		$dataRes['actor'] = $data;
+		$dataRes['language'] = $data;
 
 		$this->ci->output
         ->set_status_header(200)
@@ -55,10 +55,10 @@ class Actor extends CI_Controller {
 
 	public function insert()
 	{
-		$actor = $this->input->post('actor');
+		$language = $this->input->post('language');
 		$data = array();
 		
-		$this->db->insert('actor', $actor);
+		$this->db->insert('language', $language);
 		$dataRes['result'] = 1;		
 
 		$this->ci->output
@@ -71,11 +71,11 @@ class Actor extends CI_Controller {
 
 	public function edit()
 	{
-		$actor = $this->input->post('actor');
+		$language = $this->input->post('language');
 		$data = array();
 		
-		$this->db->where('actor_id', $actor['actor_id']);
-		$this->db->update('actor', $actor);
+		$this->db->where('language_id', $language['language_id']);
+		$this->db->update('language', $language);
 		$dataRes['result'] = 1;		
 		
 		$this->ci->output
@@ -88,11 +88,11 @@ class Actor extends CI_Controller {
 
 	public function delete()
 	{
-		$actor = $this->input->post('actor');
+		$language = $this->input->post('language');
 		$data = array();
 		
-		$this->db->where('actor_id', $actor['actor_id']);		
-		$this->db->delete('actor');
+		$this->db->where('language_id', $language['language_id']);		
+		$this->db->delete('language');
 		$dataRes['result'] = 1;
 		
 		$this->ci->output
@@ -105,5 +105,5 @@ class Actor extends CI_Controller {
 
 }
 
-/* End of file Actor.php */
-/* Location: ./application/controllers/Actor.php */
+/* End of file Language.php */
+/* Location: ./application/controllers/Language.php */

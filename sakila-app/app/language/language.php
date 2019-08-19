@@ -1,6 +1,6 @@
 <?php require("../common/tmpl/head.php"); ?>
     <div class="container-fluid">
-          <h4 class="text-primary">Actores</h4>
+          <h4 class="text-primary">Idiomas</h4>
     </div>
     <div class="container-fluid" id="ctnBotonera">
         <div class="row">
@@ -27,19 +27,18 @@
         </div>
     </div> 
 
-    <div class="container-fluid" id="ctnTabla">
+    <div class="container-fluid" id="ctnTablaIdioma">
         
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="panel panel-primary">
                     <div class="panel-body">
                         
-                        <table id="tblActor" class="table table-striped table-bordered" style="width:100%">
+                        <table id="tblIdioma" class="table table-striped table-bordered" style="width:100%">
                             <thead>
                                 <tr>
                                     <th data-priority="1" width="15"></th>                                    
-                                    <th data-priority="2">Nombres</th>
-                                    <th data-priority="3">Apellidos</th>
+                                    <th data-priority="2">Idioma</th>                                    
                                     <th data-priority="3">Fecha Ultima Modificacion</th>
                                 </tr>
                             </thead>
@@ -59,27 +58,21 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="modalCrearActor" role="dialog" >
+    <div class="modal fade" id="modalCrearIdioma" role="dialog" >
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content ">
-                <form id="formCrearActor" action="index_submit" method="post" class="form-horizontal">
+                <form id="formCrearIdioma" action="index_submit" method="post" class="form-horizontal">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">CREAR ACTOR</h4>
+                        <h4 class="modal-title" id="myModalLabel">CREAR IDIOMA</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">                            
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="actor[first_name]" class="col-md-4 control-label">Nombres:</label>
+                                    <label for="language[name]" class="col-md-4 control-label">Nombre del Idioma:</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control"  name="actor[first_name]" placeholder="Ej. Henry" autofocus>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="actor[last_name]" class="col-md-4 control-label">Apellidos:</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control" name="actor[last_name]" placeholder="Ej. Perez Gumiel">
+                                        <input type="text" class="form-control" name="language[name]" placeholder="Ej. Español">
                                     </div>
                                 </div>
                             </div>
@@ -95,27 +88,21 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="modalEditarActor" tabindex="-1" role="dialog" >
+    <div class="modal fade" id="modalEditarIdioma" tabindex="-1" role="dialog" >
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content ">
-                <form id="formEditarActor" action="index_submit" method="post" class="form-horizontal">
+                <form id="formEditarIdioma" action="index_submit" method="post" class="form-horizontal">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">EDITAR ACTOR</h4>
+                        <h4 class="modal-title" id="myModalLabel">EDITAR IDIOMA</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">                            
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="actor[first_name]" class="col-md-4 control-label">Nombres:</label>
+                                    <label for="language[name]" class="col-md-4 control-label">Nombre del Idioma:</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control prueba" name="actor[first_name]" placeholder="Ej. Henry">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="actor[last_name]" class="col-md-4 control-label">Apellidos:</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control prueba" name="actor[last_name]" placeholder="Ej. Perez">
+                                        <input type="text" class="form-control" name="language[name]" placeholder="Ej. Español">
                                     </div>
                                 </div>
                             </div>
@@ -124,7 +111,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>
-                        <input type="hidden" name="actor[actor_id]" value="">
+                        <input type="hidden" name="language[language_id]" value="">
                     </div>
                 </form>
             </div>
@@ -140,4 +127,4 @@
 
 <?php require("../common/tmpl/footer.php"); ?>
 
-<script src="app/actor/js/actors.js"></script>
+<script src="app/language/js/language.js"></script>
