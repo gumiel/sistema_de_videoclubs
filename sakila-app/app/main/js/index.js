@@ -9,7 +9,7 @@ PaginaPrincipal._cargarMenuPrincipalSideBar = function()
     console.log(123132132);
     var self = this;
     
-    var url = 'http://localhost/sistema_de_videoclubs/sakila-ci/index.php/menu/list';
+    var url = '/menu/list';
     var data = '';
     var itemsMenu = '';
     
@@ -22,7 +22,7 @@ PaginaPrincipal._cargarMenuPrincipalSideBar = function()
             index = index+2;            
             
             if(item.icono!='' && item.icono!=null){
-                item.icono = item.icono.replace("../../../lib/", "../pxp/lib/");
+                item.icono = "";
                 item.icono = '<img src="'+item.icono+'" />';
             }else {
                 // if(item.nombre.indexOf("fa-1x")<0){

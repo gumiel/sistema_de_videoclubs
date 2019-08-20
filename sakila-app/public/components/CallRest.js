@@ -9,7 +9,7 @@ var CallRest = {
 	},
 	post: function(url, data, callback){
 
-		this.config.url = url;
+		this.config.url = Config.rest_base_url+url;
 		this.config.data = data;
 		this.config.type = 'POST';
 		

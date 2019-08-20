@@ -22,7 +22,7 @@ ctnTablaIdioma.llenarTabla = function(res){
     var self = this;
 	self.tblIdioma.clean(); // Limpia primeramente la tabla si es que tiene algun dato           
 
-    var url  = 'http://localhost/sistema_de_videoclubs/sakila-ci/index.php/language/list';
+    var url  = '/language/list';
     var data = '';
 
     CallRest.post(url, data, function(res){
@@ -62,10 +62,10 @@ ctnBotonera._iniciar = function(){
             
             if(res){
                 var self = this;
-                var dataLanguage = self.tblIdioma.getIds();
+                var dataLanguage = ctnTablaIdioma.tblIdioma.getIds();
                 var id  = dataLanguage[0].language_id;   
 
-                var url = 'http://localhost/sistema_de_videoclubs/sakila-ci/index.php/language/delete' 
+                var url = '/language/delete' 
                 var data = {language:{language_id: id}};
                 
                 CallRest.post(url, data, function(res)
@@ -127,7 +127,7 @@ ctnModalCrearIdioma.insertarIdioma = function(){
         
         if(resultado) 
         {
-            var url  = "http://localhost/sistema_de_videoclubs/sakila-ci/index.php/language/insert";            
+            var url  = "/language/insert";            
             var data = self.$formCrearIdioma.serialize();
             
             CallRest.post(url, data, function(res)
@@ -149,10 +149,10 @@ ctnModalCrearIdioma.insertarIdioma = function(){
 
 ctnModalEditarIdioma.obtenerIdioma = function(){
     var self = this;
-    var dataIdioma = self.tblIdioma.getIds();
+    var dataIdioma = ctnTablaIdioma.tblIdioma.getIds();
     var id  = dataIdioma[0].language_id;   
 
-    var url = 'http://localhost/sistema_de_videoclubs/sakila-ci/index.php/language/get' 
+    var url = '/language/get' 
     var data = {language:{language_id: id}};
 
 
@@ -174,7 +174,7 @@ ctnModalEditarIdioma.editarIdioma = function(){
         
         if(resultado) 
         {
-            var url  = "http://localhost/sistema_de_videoclubs/sakila-ci/index.php/language/edit";            
+            var url  = "/language/edit";            
             var data = self.formEditarIdioma.serialize();
             
             CallRest.post(url, data, function(res)

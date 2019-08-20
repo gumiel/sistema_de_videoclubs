@@ -22,7 +22,7 @@ ctnTablaPais.llenarTabla = function(res){
     var self = this;
 	self.tblPais.clean(); // Limpia primeramente la tabla si es que tiene algun dato           
 
-    var url  = 'http://localhost/sistema_de_videoclubs/sakila-ci/index.php/country/list';
+    var url  = '/country/list';
     var data = '';
 
     CallRest.post(url, data, function(res){
@@ -65,7 +65,7 @@ ctnBotonera._iniciar = function(){
                 var dataCountry = ctnTablaPais.tblPais.getIds();
                 var id  = dataCountry[0].country_id;   
 
-                var url = 'http://localhost/sistema_de_videoclubs/sakila-ci/index.php/country/delete' 
+                var url = '/country/delete' 
                 var data = {country:{country_id: id}};
                 
                 CallRest.post(url, data, function(res)
@@ -127,7 +127,7 @@ ctnModalCrearPais.insertarPais = function(){
         
         if(resultado) 
         {
-            var url  = "http://localhost/sistema_de_videoclubs/sakila-ci/index.php/country/insert";            
+            var url  = "/country/insert";            
             var data = self.$formCrearPais.serialize();
             
             CallRest.post(url, data, function(res)
@@ -152,7 +152,7 @@ ctnModalEditarPais.obtenerPais = function(){
     var dataPais = ctnTablaPais.tblPais.getIds();
     var id  = dataPais[0].country_id;   
 
-    var url = 'http://localhost/sistema_de_videoclubs/sakila-ci/index.php/country/get' 
+    var url = '/country/get' 
     var data = {country:{country_id: id}};
 
 
@@ -174,7 +174,7 @@ ctnModalEditarPais.editarPais = function(){
         
         if(resultado) 
         {
-            var url  = "http://localhost/sistema_de_videoclubs/sakila-ci/index.php/country/edit";            
+            var url  = "/country/edit";            
             var data = self.formEditarPais.serialize();
             
             CallRest.post(url, data, function(res)

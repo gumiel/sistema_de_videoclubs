@@ -1,3 +1,6 @@
+<?php 
+$base_url = "http://localhost/sistema_de_videoclubs/sakila-app/";
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -8,7 +11,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <meta name="theme-color" content="#162A75" />
-        <base href="http://localhost/sistema_de_videoclubs/sakila-app/">
+        <base href="<?php echo $base_url ?>">
         <link rel="icon" href="">
 
         <title>Componentes</title>
@@ -37,7 +40,7 @@
         
         <!-- Estilos propios -->
         <link rel="stylesheet" type="text/css" href="public/css/style.css">
-
+        
     </head>
 
 <body>

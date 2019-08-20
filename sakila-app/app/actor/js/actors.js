@@ -25,7 +25,7 @@ ctnActor.llenarTabla = function(res){
     var self = this;
 	ctnActor.tblActor.clean(); // Limpia primeramente la tabla si es que tiene algun dato           
 
-    var url  = 'http://localhost/sistema_de_videoclubs/sakila-ci/index.php/actor/list';
+    var url  = '/actor/list';
     var data = '';
 
     CallRest.post(url, data, function(res){
@@ -69,7 +69,7 @@ ctnBotonera._iniciar = function(){
                 var dataActor = ctnActor.tblActor.getIds();
                 var actor_id  = dataActor[0].actor_id;   
 
-                var url = 'http://localhost/sistema_de_videoclubs/sakila-ci/index.php/actor/delete' 
+                var url = '/actor/delete' 
                 var data = {actor:{actor_id: actor_id}};
                 
                 CallRest.post(url, data, function(res)
@@ -137,7 +137,7 @@ ctnModalCrearActor.insertarActor = function(){
         
         if(resultado) 
         {
-            var url  = "http://localhost/sistema_de_videoclubs/sakila-ci/index.php/actor/insert";            
+            var url  = "/actor/insert";            
             var data = self.$formCrearActor.serialize();
             
             CallRest.post(url, data, function(res)
@@ -162,7 +162,7 @@ ctnModalEditarActor.obtenerActor = function(){
     var dataActor = ctnActor.tblActor.getIds();
     var actor_id  = dataActor[0].actor_id;   
 
-    var url = 'http://localhost/sistema_de_videoclubs/sakila-ci/index.php/actor/get' 
+    var url = '/actor/get' 
     var data = {actor:{actor_id: actor_id}};
 
 
@@ -184,7 +184,7 @@ ctnModalEditarActor.editarActor = function(){
         
         if(resultado) 
         {
-            var url  = "http://localhost/sistema_de_videoclubs/sakila-ci/index.php/actor/edit";            
+            var url  = "/actor/edit";            
             var data = self.formEditarActor.serialize();
             
             CallRest.post(url, data, function(res)
