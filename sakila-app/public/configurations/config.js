@@ -3,7 +3,7 @@
  */
 var Config = {
 	folderServer  : "/sistema_de_videoclubs",
-	folder  : "/sakila-app/app/",
+	folder  : "/sakila-app/app",
 	// domain : document.domain,
 	domain : 'localhost',
 	protocol : window.location.protocol,
