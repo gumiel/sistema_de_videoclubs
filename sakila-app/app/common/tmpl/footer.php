@@ -67,7 +67,8 @@
     <script src="public/configurations/config.select2.js?date='<?php echo uniqid()?>'"></script>
 
     <!-- Componentes -->
-    <script src="public/components/ContainerJS.js" type="text/javascript"></script>
+    <script src="public/core/ContainerJS.js" type="text/javascript"></script>
+    <script src="public/core/ModelJS.js" type="text/javascript"></script>
     <script src="public/components/CallRest.js" type="text/javascript"></script>
 
     <!-- PNotify -->

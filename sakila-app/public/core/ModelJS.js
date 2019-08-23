@@ -1,9 +1,15 @@
+
 function ModelJS(model)
 {
 	var modelJs = model;
+	var nuevo;
 
+	///////////////////////////////
+	// Este es un metodo privado //
+	///////////////////////////////
 	this.removeNull = function(obj)
 	{
+		alert("privado");
 		if( typeof obj != 'undefined')
 		{
 			obj = modelJs;
@@ -16,7 +22,8 @@ function ModelJS(model)
 				obj[atr] = this.removeNull(obj[atr]);
 			} else
 			{					
-				if(obj[atr] == 'null' || obj[atr] == null)
+				// if(obj[atr] == 'null' || obj[atr] == null)
+				if(obj[atr] == null)
 				{								
 					obj[atr] = '';
 				}	
@@ -24,23 +31,29 @@ function ModelJS(model)
 		}
 		return obj;
 	};
+
+	
+
+	
 }
 
-
-function borrarNulos(obj){
+///////////////////////////////
+// Este es un metodo publico //
+///////////////////////////////
+ModelJS.removeNull = function(obj){
 	for(const atr in obj)
 	{	
-		if(typeof obj[atr]=='object' )
+		if(typeof obj[atr]=='object' && obj[atr]!=null )
 		{							
-			obj[atr] = borrarNulos(obj[atr]);
+			obj[atr] = ModelJS.removeNull(obj[atr]);
 		} else{	
-			alert(obj[atr]);
-			if(obj[atr] == 'null' || obj[atr] == null)
+			// if(obj[atr] == 'null' || obj[atr] == null)
+			if(obj[atr] == null)
 			{			
-				
 				obj[atr] = '';
 			}	
 		}
 	}
 	return obj;
-}
+};
+

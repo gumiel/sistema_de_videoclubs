@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="Plantilla de prueba para movil">
-    <meta name="author" content="Ende-Corani: Henry Perez Gumiel">
+    <meta name="author" content="Henry Perez Gumiel">
     <meta name="theme-color" content="#162A75" />
     
     <meta http-equiv="Expires" content="0">
@@ -14,7 +14,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
     <meta http-equiv="Pragma" content="no-cache">
 
-    <link rel="icon" href="../../public/images/sisjob.ico">
+
 
     <title>Sistema de Video Clubs</title>
 

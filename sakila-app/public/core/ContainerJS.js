@@ -29,7 +29,29 @@ function ContainerJS(elemento){
 			  var propertyValue=obj[property].toString().substring(inicio,fin);
 			  msg +=(typeof obj[property])+' '+property+' : '+propertyValue+' ;\n';
 			}
+		}		
+	};
+
+	this.registerId = function(value, name){
+		console.log("asdasd");
+		var nameAttribute = (typeof name != 'undefined')? name: value;
+		this[nameAttribute] = this.ele.find('#'+value);		
+	};
+
+	this.registerClass = function(value, name){		
+		var nameAttribute = (typeof name != 'undefined')? name: value;
+		this[nameAttribute] = this.ele.find('.'+value);		
+	};
+
+	this.registerElement = function(value, name){			
+		if(typeof name != 'undefined'){
+			this[name] = this.ele.find(value);		
+		}		
+	};
+
+	this.registerTable = function(table, name){
+		if(typeof table == 'object' && typeof name != 'undefined'){
+			this[name] = table;		
 		}
-		console.log(msg);
-	}
+	};
 }
