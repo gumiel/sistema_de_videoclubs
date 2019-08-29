@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Film extends CI_Controller {
+class Category extends CI_Controller {
 
 	protected $ci;
 
@@ -20,14 +20,10 @@ class Film extends CI_Controller {
 	public function list()
 	{
 		$dataRes = array();
-		$this->db->select('film.*, language.name as name_language, original_language.name as name_original_language');
-		$this->db->join('language original_language', 'original_language.language_id = film.original_language_id', 'left');
-		$this->db->join('language', 'language.language_id = film.language_id', 'left');
-		// $this->db->limit(2);
-		$query = $this->db->get('film');
+		$query = $this->db->get('category');
 		$data = $query->result();
 		$dataRes['result'] = 1;
-		$dataRes['films'] = $data;		
+		$dataRes['categorys'] = $data;		
 
 		$this->ci->output
         ->set_status_header(200)
@@ -39,19 +35,15 @@ class Film extends CI_Controller {
 
 	public function get()
 	{
-		$film = $this->input->post('film');
+		$category = $this->input->post('category');
 		
 		$data = array();
-
-		$this->db->select('film.*, language.name as name_language, original_language.name as name_original_language');
-		$this->db->join('language original_language', 'original_language.language_id = film.original_language_id', 'left');
-		$this->db->join('language', 'language.language_id = film.language_id', 'left');
-		$this->db->where('film_id', $film['film_id']);
-		$query = $this->db->get('film');
+		$this->db->where('category_id', $category['category_id']);
+		$query = $this->db->get('category');
 		$data = $query->row();
 
 		$dataRes['result'] = 1;
-		$dataRes['film'] = $data;
+		$dataRes['category'] = $data;
 
 		$this->ci->output
         ->set_status_header(200)
@@ -63,10 +55,10 @@ class Film extends CI_Controller {
 
 	public function insert()
 	{
-		$film = $this->input->post('film');
+		$category = $this->input->post('category');
 		$data = array();
 		
-		$this->db->insert('film', $film);
+		$this->db->insert('category', $category);
 		$dataRes['result'] = 1;		
 
 		$this->ci->output
@@ -79,11 +71,11 @@ class Film extends CI_Controller {
 
 	public function edit()
 	{
-		$film = $this->input->post('film');
+		$category = $this->input->post('category');
 		$data = array();
 		
-		$this->db->where('film_id', $film['film_id']);
-		$this->db->update('film', $film);
+		$this->db->where('category_id', $category['category_id']);
+		$this->db->update('category', $category);
 		$dataRes['result'] = 1;		
 		
 		$this->ci->output
@@ -96,11 +88,11 @@ class Film extends CI_Controller {
 
 	public function delete()
 	{
-		$film = $this->input->post('film');
+		$category = $this->input->post('category');
 		$data = array();
 		
-		$this->db->where('film_id', $film['film_id']);		
-		$this->db->delete('film');
+		$this->db->where('category_id', $category['category_id']);		
+		$this->db->delete('category');
 		$dataRes['result'] = 1;
 		
 		$this->ci->output
@@ -113,5 +105,5 @@ class Film extends CI_Controller {
 
 }
 
-/* End of file Film.php */
-/* Location: ./application/controllers/Film.php */
+/* End of file Category.php */
+/* Location: ./application/controllers/Category.php */

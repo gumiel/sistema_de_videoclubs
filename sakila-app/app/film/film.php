@@ -141,15 +141,24 @@
                                     <label for="film[rating]" class="col-md-4 control-label">Clasificación:</label>
                                     <div class="col-md-8">                                        
                                         <select name="film[rating]" class="form-control">
-                                            <option value=""></option>
+                                            <option value="">Seleccione</option>
+                                            <option value="G">G</option>
+                                            <option value="PG">PG</option>
+                                            <option value="PG-13">PG-13</option>
+                                            <option value="R">R</option>
+                                            <option value="NC-17">NC-17</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="film[special_features]" class="col-md-4 control-label">Caracteristica Especial:</label>
                                     <div class="col-md-8">                                        
-                                        <select name="film[special_features]" class="form-control">
-                                            <option value=""></option>
+                                        <select name="film[special_features]" class="form-control" multiple="">
+                                            <option value="">Seleccione</option>
+                                            <option value="Trailers">Trailers</option>
+                                            <option value="Commentaries">Commentaries</option>
+                                            <option value="Deleted Scenes">Deleted Scenes</option>
+                                            <option value="Behind the Scenes">Behind the Scenes</option>
                                         </select>
                                     </div>
                                 </div>
@@ -239,15 +248,24 @@
                                     <label for="film[rating]" class="col-md-4 control-label">Clasificación:</label>
                                     <div class="col-md-8">                                        
                                         <select name="film[rating]" class="form-control">
-                                            <option value=""></option>
+                                            <option value="">Seleccione</option>
+                                            <option value="G">G</option>
+                                            <option value="PG">PG</option>
+                                            <option value="PG-13">PG-13</option>
+                                            <option value="R">R</option>
+                                            <option value="NC-17">NC-17</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="film[special_features]" class="col-md-4 control-label">Caracteristica Especial:</label>
                                     <div class="col-md-8">                                        
-                                        <select name="film[special_features]" class="form-control">
-                                            <option value=""></option>
+                                        <select name="film[special_features]" class="form-control" multiple="">
+                                            <option value="">Seleccione</option>
+                                            <option value="Trailers">Trailers</option>
+                                            <option value="Commentaries">Commentaries</option>
+                                            <option value="Deleted Scenes">Deleted Scenes</option>
+                                            <option value="Behind the Scenes">Behind the Scenes</option>
                                         </select>
                                     </div>
                                 </div>

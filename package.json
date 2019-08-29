@@ -1,0 +1,19 @@
+{
+  "name": "sistema_de_videoclubs",
+  "version": "0.0.1",
+  "description": "Este es un sistema para videoclubs o alquileres de videos",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gumiel/sistema_de_videoclubs.git"
+  },
+  "author": "Henry Perez Gumiel prez.gumiel@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gumiel/sistema_de_videoclubs/issues"
+  },
+  "homepage": "https://github.com/gumiel/sistema_de_videoclubs#readme"
+}

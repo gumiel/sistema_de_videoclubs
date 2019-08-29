@@ -9,13 +9,126 @@ var tblFilm = new CDataTable('#tblFilm');
 
 ctnFilm.registerTable(tblFilm, 'tblFilm');
 
-ctnModalCrearFilm.registerId('formCrearFilm', 'formCrearFilm');
-ctnModalEditarFilm.registerElement('#formEditarFilm', 'formEditarFilm');
+ctnModalCrearFilm.registerId('formCrearFilm', '$formCrearFilm');
+ctnModalEditarFilm.registerElement('#formEditarFilm', '$formEditarFilm');
+
+var configSel2 = {
+                    // data: { text: 'name', id: 'language_id', },
+                    ajax: {
+                        url: Config.rest_base_url+'/language/list',
+                        data: function (params) {
+                            var query = {
+                                search: params.term,
+                                type: 'public'
+                            }
+                            // Query parameters will be ?search=[term]&type=public
+                            return query;
+                        },
+                        processResults: function (data) {
+                                                
+                            return {                    
+                                results: $.map(data.languages, function(item) {
+                                    return {                            
+                                        id: item.language_id,                            
+                                        text: item.name,
+                                    }
+                                })
+                            };
+                        }
+                    }
+                };
+
+var configValidate = {
+                        rules: {
+                            "film[title]": {
+                                required: true
+                            },
+                            "film[description]": {
+                                required: true
+                            },
+                            "film[release_year]": {
+                                required: true,
+                                digits: true
+                            },
+                            "film[language_id]": {
+                                required: true
+                            },
+                            "film[original_language_id]": {
+                                required: true
+                            },
+                            "film[rental_duration]": {
+                                required: true,
+                                digits: true,
+                            },
+                            "film[rental_rate]": {
+                                required: true,
+                                number: true
+                            },
+                            "film[length]": {
+                                required: true,
+                                digits: true
+                            },
+                            "film[replacement_cost]": {
+                                required: true,
+                                number: true,
+                            },
+                            "film[rating]": {
+                                required: true
+                            },
+                            "film[special_features]": {
+                                required: true
+                            },
+                        }
+                    };
+
+
 
 
 ctnFilm._iniciar = function(){
     this.llenarTabla();
 };
+
+ctnFilm.llenarTabla = function(res){
+
+    var self = this;
+    ctnFilm.tblFilm.clean(); // Limpia primeramente la tabla si es que tiene algun dato           
+
+    var url  = '/film/list';
+    var data = '';
+
+    CallRest.post(url, data, function( res ){        
+        
+        res = ModelJS.removeNull(res);
+        
+        $.each(res.films, function(index, film) {
+            var row = "";
+            row += "<tr>";
+            row += "    <td><input type='hidden'name='film_id' value='"+film.film_id+"' /></td>";
+            row += "    <td>"+film.title+"</td>";
+            row += "    <td>"+film.description+"</td>";
+            row += "    <td>"+film.release_year+"</td>";
+            row += "    <td>"+film.name_language+"</td>";
+            row += "    <td>"+film.name_original_language+"</td>";            
+            row += "    <td>"+film.rental_duration+"</td>";
+            row += "    <td>"+film.rental_rate+"</td>";
+            row += "    <td>"+film.length+"</td>";
+            row += "    <td>"+film.replacement_cost+"</td>";
+            row += "    <td>"+film.rating+"</td>";
+            row += "    <td>"+film.special_features+"</td>";
+            row += "    <td>"+film.last_update+"</td>";
+            row += "</tr>";
+
+            ctnFilm.tblFilm.append(row);                 
+        });
+
+        ctnFilm.tblFilm.simpleSelect();
+    });
+};
+
+
+
+
+
 
 ctnBotonera._iniciar = function(){
     var self = this;
@@ -24,8 +137,8 @@ ctnBotonera._iniciar = function(){
     });
 
     self.ele.find('#btnEditar').click(function(event) {
-        ctnmodalEditarFilm.obtenerActor();
-        ctnmodalEditarFilm.ele.modal();
+        ctnModalEditarFilm.obtenerFilm();
+        ctnModalEditarFilm.ele.modal();
     });
 
     self.ele.find('#btnActualizar').click(function(event) {
@@ -59,99 +172,43 @@ ctnBotonera._iniciar = function(){
     });
 }
 
-ctnModalCrearFilm.iniciar = function(){
+
+
+
+
+
+
+
+ctnModalCrearFilm._iniciar = function(){
+
+    var self = this;    
+    // self.ele.find('select[name="film[language_id]"]').select2();
+
+
     
-    var self = this;    
 
-    this.$formCrearActor.validate({
-        rules: {
-            "actor[first_name]": {
-                required: true
-            },
-            "actor[last_name]": {
-                required: true
-            }
-        }
-    });
+    self.ele.find('select[name="film[language_id]"]').select2(configSel2);
+    self.ele.find('select[name="film[original_language_id]"]').select2(configSel2);
+    self.ele.find('select[name="film[rating]"]').select2();
+    self.ele.find('select[name="film[special_features]"]').select2();
+    
+    
 
-    ctnModalCrearFilm.insertarActor();        
+    self.$formCrearFilm.validate(configValidate);
 
-}
-
-ctnModalEditarFilm.iniciar = function(){
-    // alert(this._prueba.html());
-    var self = this;    
-
-    this.formEditarActor.validate({
-        rules: {
-            "actor[first_name]": {
-                required: true
-            },
-            "actor[last_name]": {
-                required: true
-            },
-            "actor[actor_id]": {
-                required: true
-            }
-        }
-    });
-
-    self.editarActor();        
-
-}
-
-ctnFilm.llenarTabla = function(res){
-
-    var self = this;
-	ctnFilm.tblFilm.clean(); // Limpia primeramente la tabla si es que tiene algun dato           
-
-    var url  = '/film/list';
-    var data = '';
-
-    CallRest.post(url, data, function( res ){        
-        
-        res = ModelJS.removeNull(res);
-        
-        $.each(res.films, function(index, film) {
-            var row = "";
-            row += "<tr>";
-            row += "    <td><input type='hidden'name='film_id' value='"+film.film_id+"' /></td>";
-            row += "    <td>"+film.title+"</td>";
-            row += "    <td>"+film.description+"</td>";
-            row += "    <td>"+film.release_year+"</td>";
-            row += "    <td>"+film.name_language+"</td>";
-            row += "    <td>"+film.name_original_language+"</td>";            
-            row += "    <td>"+film.rental_duration+"</td>";
-            row += "    <td>"+film.rental_rate+"</td>";
-            row += "    <td>"+film.length+"</td>";
-            row += "    <td>"+film.replacement_cost+"</td>";
-            row += "    <td>"+film.rating+"</td>";
-            row += "    <td>"+film.special_features+"</td>";
-            row += "    <td>"+film.last_update+"</td>";
-            row += "</tr>";
-
-            ctnFilm.tblFilm.append(row);                 
-        });
-
-        ctnFilm.tblFilm.simpleSelect();
-    });
+    ctnModalCrearFilm.insertarFilm();        
 
 };
 
+ctnModalCrearFilm.insertarFilm = function(){
+    var self = this;    
 
-
-
-
-ctnModalCrearFilm.insertarActor = function(){
-
-	var self = this;	
-
-	this.$formCrearActor.submitValidation(function(resultado){
+    self.$formCrearFilm.submitValidation(function(resultado){
         
         if(resultado) 
         {
-            var url  = "/actor/insert";            
-            var data = self.$formCrearActor.serialize();
+            var url  = "/film/insert";            
+            var data = self.$formCrearFilm.serialize();
             
             CallRest.post(url, data, function(res)
             {
@@ -160,45 +217,75 @@ ctnModalCrearFilm.insertarActor = function(){
                     self.ele.modal("hide");
                     Notificacions.success();                    
                     ctnModalCrearFilm.limpiarFormulario();
-                    ctnActor.llenarTabla();
+                    ctnFilm.llenarTabla();
                 }else{
-                    Notificacions.errors()
+                    Notificacions.errors();
                 }
             });
         }
 
     });
-}
+};
 
-ctnModalEditarFilm.obtenerActor = function(){
+ctnModalCrearFilm.limpiarFormulario = function(){
+    this.$formCrearFilm.trigger("reset");
+};
+
+ctnModalEditarFilm._iniciar = function(){
+    // alert(this._prueba.html());
+    var self = this;    
+
+    self.$formEditarFilm.validate(configValidate);
+
+
+
+
+    self.ele.find('select[name="film[language_id]"]').select2(configSel2);
+    self.ele.find('select[name="film[original_language_id]"]').select2(configSel2);
+    self.ele.find('select[name="film[rating]"]').select2();
+    self.ele.find('select[name="film[special_features]"]').select2();
+
+
+    self.editarFilm();
+};
+
+
+
+
+
+
+
+
+
+ctnModalEditarFilm.obtenerFilm = function(){
     var self = this;
-    var dataActor = ctnActor.tblActor.getIds();
-    var actor_id  = dataActor[0].actor_id;   
+    var dataFilm = ctnFilm.tblFilm.getIds();
+    var film_id  = dataFilm[0].film_id;   
 
-    var url = '/actor/get' 
-    var data = {actor:{actor_id: actor_id}};
+    var url = '/film/get';
+    var data = {film:{'film_id': film_id}};
 
 
     CallRest.post(url, data, function(res)
     {
         if(res.result==1)
         {            
-            self.llenarFormularioEdicion(res.actor);      
+            self.llenarFormularioEdicion(res.film);      
         }else{
-            Notificacions.errors()
+            Notificacions.errors();
         }
     });
-}
+};
 
-ctnModalEditarFilm.editarActor = function(){    
+ctnModalEditarFilm.editarFilm = function(){    
     var self = this;    
 
-    this.formEditarActor.submitValidation(function(resultado){
+    this.$formEditarFilm.submitValidation(function(resultado){
         
         if(resultado) 
         {
-            var url  = "/actor/edit";            
-            var data = self.formEditarActor.serialize();
+            var url  = "/film/edit";            
+            var data = self.$formEditarFilm.serialize();
             
             CallRest.post(url, data, function(res)
             {
@@ -207,32 +294,75 @@ ctnModalEditarFilm.editarActor = function(){
                     self.ele.modal("hide");
                     self.limpiarFormulario();
                     Notificacions.success();  
-                    ctnActor.llenarTabla();                  
+                    ctnFilm.llenarTabla();                  
                 }else{
-                    Notificacions.errors()
+                    Notificacions.errors();
                 }
             });
         }
 
     });
-}
-
-ctnModalCrearFilm.limpiarFormulario = function(){
-	this.$formCrearActor.trigger("reset");
-}
+};
 
 ctnModalEditarFilm.limpiarFormulario = function(){
-    this.formEditarActor.trigger("reset");
-}
+    this.$formEditarFilm.trigger("reset");
+};
 
-ctnModalEditarFilm.llenarFormularioEdicion = function(actor){
+ctnModalEditarFilm.llenarFormularioEdicion = function(film){
+    console.log("llenarFormularioEdicion");
     var self = this;
     self.limpiarFormulario();
-    console.log("aqui");
-    self.ele.find("input[name='actor[first_name]']").val(actor.first_name);
-    self.ele.find("input[name='actor[last_name]']").val(actor.last_name);
-    self.ele.find("input[name='actor[actor_id]']").val(actor.actor_id);
-}
+    
+    self.ele.find("input[name='film[title]']").val(film.title);
+    self.ele.find("textArea[name='film[description]']").val(film.description);
+    self.ele.find("input[name='film[release_year]']").val(film.release_year);
+    
+    // self.ele.find("select[name='film[language_id]']").val(film.language_id).trigger("change");
+    // manually trigger the `select2:select` event
+    
+    var dato = CallRest.postReturn('/language/get', {language:{language_id: film.language_id}});
+    
+    var option = new Option(dato.language.name, dato.language.language_id, true, true);
+    self.ele.find("select[name='film[language_id]']").append(option).trigger('change');
+
+    // manually trigger the `select2:select` event
+    self.ele.find("select[name='film[language_id]']").trigger({
+        type: 'select2:select',
+        params: {
+            data: {id:dato.language.language_id, text:dato.language.name}
+        }
+    }); 
+
+    var dato2 = CallRest.postReturn('/language/get', {language:{language_id: film.original_language_id}});
+    
+    if(dato2.language!=null)
+    {
+        var option2 = new Option(dato2.language.name, dato2.language.language_id, true, true);
+        self.ele.find("select[name='film[original_language_id]']").append(option2).trigger('change');
+
+        // manually trigger the `select2:select` event
+        self.ele.find("select[name='film[original_language_id]']").trigger({
+            type: 'select2:select',
+            params: {
+                data: {id: dato2.language.language_id, text: dato2.language.name}
+            }
+        }); 
+    }
+    
+    self.ele.find("input[name='film[rental_duration]']").val(film.rental_duration);
+    self.ele.find("input[name='film[rental_rate]']").val(film.rental_rate);
+    self.ele.find("input[name='film[length]']").val(film.length);
+    self.ele.find("input[name='film[replacement_cost]']").val(film.replacement_cost);
+
+    self.ele.find("select[name='film[rating]']").val(film.rating).trigger("change");
+    // self.ele.find('select[name="film[special_features]"]').select2();
+
+    var feactures = film.special_features.split(',');    
+    self.ele.find("select[name='film[special_features]']").val(feactures).trigger('change');    
+    
+    
+    self.ele.find("input[name='film[film_id]']").val(film.film_id);
+};
 
 
 
