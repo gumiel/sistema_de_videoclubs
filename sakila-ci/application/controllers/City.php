@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Category extends CI_Controller {
+class City extends CI_Controller {
 
 	protected $ci;
 
@@ -20,10 +20,12 @@ class Category extends CI_Controller {
 	public function list()
 	{
 		$dataRes = array();
-		$query = $this->db->get('category');
+		$this->db->select('city.*, country.country as country');
+		$this->db->join('country', 'country.country_id = city.country_id', 'left');		
+		$query = $this->db->get('city');
 		$data = $query->result();
 		$dataRes['result'] = 1;
-		$dataRes['categories'] = $data;		
+		$dataRes['cities'] = $data;		
 
 		$this->ci->output
         ->set_status_header(200)
@@ -35,15 +37,15 @@ class Category extends CI_Controller {
 
 	public function get()
 	{
-		$category = $this->input->post('category');
+		$city = $this->input->post('city');
 		
 		$data = array();
-		$this->db->where('category_id', $category['category_id']);
-		$query = $this->db->get('category');
+		$this->db->where('city_id', $city['city_id']);
+		$query = $this->db->get('city');
 		$data = $query->row();
 
 		$dataRes['result'] = 1;
-		$dataRes['category'] = $data;
+		$dataRes['city'] = $data;
 
 		$this->ci->output
         ->set_status_header(200)
@@ -55,10 +57,10 @@ class Category extends CI_Controller {
 
 	public function insert()
 	{
-		$category = $this->input->post('category');
+		$city = $this->input->post('city');
 		$data = array();
 		
-		$this->db->insert('category', $category);
+		$this->db->insert('city', $city);
 		$dataRes['result'] = 1;		
 
 		$this->ci->output
@@ -71,11 +73,11 @@ class Category extends CI_Controller {
 
 	public function edit()
 	{
-		$category = $this->input->post('category');
+		$city = $this->input->post('city');
 		$data = array();
 		
-		$this->db->where('category_id', $category['category_id']);
-		$this->db->update('category', $category);
+		$this->db->where('city_id', $city['city_id']);
+		$this->db->update('city', $city);
 		$dataRes['result'] = 1;		
 		
 		$this->ci->output
@@ -88,11 +90,11 @@ class Category extends CI_Controller {
 
 	public function delete()
 	{
-		$category = $this->input->post('category');
+		$city = $this->input->post('city');
 		$data = array();
 		
-		$this->db->where('category_id', $category['category_id']);		
-		$this->db->delete('category');
+		$this->db->where('city_id', $city['city_id']);		
+		$this->db->delete('city');
 		$dataRes['result'] = 1;
 		
 		$this->ci->output
@@ -105,5 +107,5 @@ class Category extends CI_Controller {
 
 }
 
-/* End of file Category.php */
-/* Location: ./application/controllers/Category.php */
+/* End of file City.php */
+/* Location: ./application/controllers/City.php */

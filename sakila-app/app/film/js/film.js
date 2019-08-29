@@ -20,7 +20,7 @@ var configSel2 = {
                             var query = {
                                 search: params.term,
                                 type: 'public'
-                            }
+                            };
                             // Query parameters will be ?search=[term]&type=public
                             return query;
                         },
@@ -31,7 +31,7 @@ var configSel2 = {
                                     return {                            
                                         id: item.language_id,                            
                                         text: item.name,
-                                    }
+                                    };
                                 })
                             };
                         }
@@ -182,17 +182,11 @@ ctnBotonera._iniciar = function(){
 ctnModalCrearFilm._iniciar = function(){
 
     var self = this;    
-    // self.ele.find('select[name="film[language_id]"]').select2();
-
-
-    
 
     self.ele.find('select[name="film[language_id]"]').select2(configSel2);
     self.ele.find('select[name="film[original_language_id]"]').select2(configSel2);
     self.ele.find('select[name="film[rating]"]').select2();
     self.ele.find('select[name="film[special_features]"]').select2();
-    
-    
 
     self.$formCrearFilm.validate(configValidate);
 

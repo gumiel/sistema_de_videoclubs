@@ -23,7 +23,7 @@ class Country extends CI_Controller {
 		$query = $this->db->get('country');
 		$data = $query->result();
 		$dataRes['result'] = 1;
-		$dataRes['countrys'] = $data;		
+		$dataRes['countries'] = $data;		
 
 		$this->ci->output
         ->set_status_header(200)

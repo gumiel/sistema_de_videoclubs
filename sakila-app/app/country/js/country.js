@@ -26,7 +26,7 @@ ctnTablaPais.llenarTabla = function(res){
     var data = '';
 
     CallRest.post(url, data, function(res){
-        $.each(res.countrys, function(index, country) {
+        $.each(res.countries, function(index, country) {
             var row = "";
             row += "<tr>";
             row += "    <td><input type='hidden'name='country_id' value='"+country.country_id+"' /></td>";

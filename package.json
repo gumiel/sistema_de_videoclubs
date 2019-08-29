@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/gumiel/sistema_de_videoclubs.git"
   },
-  "author": "Henry Perez Gumiel prez.gumiel@gmail.com",
+  "author": "Henry Perez Gumiel <prez.gumiel@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/gumiel/sistema_de_videoclubs/issues"
