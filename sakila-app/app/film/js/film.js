@@ -1,17 +1,35 @@
+/*
+Creación de contenedores
+ */
 var ctnFilm            = new ContainerJS("#ctnFilm");
 var ctnBotonera         = new ContainerJS("#ctnBotonera");
 var ctnModalCrearFilm  = new ContainerJS("#modalCrearFilm");
 var ctnModalEditarFilm = new ContainerJS("#modalEditarFilm");
+var ctnModalFilmActor = new ContainerJS("#modalFilmActor");
 
+/*
+Creación de tablas y registrar a los contenedores
+ */
 var tblFilm = new CDataTable('#tblFilm');
-
-
-
 ctnFilm.registerTable(tblFilm, 'tblFilm');
 
+var tblActor = new CDataTable('#tblActor');
+ctnModalFilmActor.registerTable(tblActor, 'tblActor');
+
+var tblFilmActor = new CDataTable('#tblFilmActor');
+ctnModalFilmActor.registerTable(tblFilmActor, 'tblFilmActor');
+
+
+/*
+Registrar Elementos a los contenedores
+ */
 ctnModalCrearFilm.registerId('formCrearFilm', '$formCrearFilm');
 ctnModalEditarFilm.registerElement('#formEditarFilm', '$formEditarFilm');
 
+
+/*
+Variables Globales
+ */
 var configSel2 = {
                     // data: { text: 'name', id: 'language_id', },
                     ajax: {
@@ -153,7 +171,7 @@ ctnBotonera._iniciar = function(){
                 var dataFilm = ctnFilm.tblFilm.getIds();
                 var id  = dataFilm[0].film_id;   
 
-                var url = '/film/delete' 
+                var url = '/film/delete';
                 var data = {film:{film_id: id}};
                 
                 CallRest.post(url, data, function(res)
@@ -163,16 +181,26 @@ ctnBotonera._iniciar = function(){
                         Notificacions.success();  
                         ctnFilm.llenarTabla();                  
                     }else{
-                        Notificacions.errors()
+                        Notificacions.errors();
                     }
                 });
             }            
 
         });
     });
-}
 
+    self.ele.find('#btnAgregarActores').click(function(event) {
 
+        if(ctnFilm.tblFilm.getIds().length>0){
+            ctnModalFilmActor.ele.modal();
+            ctnModalFilmActor.ele.find("#txtNombrePelicula").val(ctnFilm.tblFilm.getData()[1]);
+            ctnModalFilmActor.llenarTablaActors();
+            ctnModalFilmActor.llenarTablaFilmActors();
+        }else{
+            Notificacions.warning("Seleccione una pelicula");
+        }
+    });
+};
 
 
 
@@ -361,10 +389,119 @@ ctnModalEditarFilm.llenarFormularioEdicion = function(film){
 
 
 
+
+
+
+
+
+ctnModalFilmActor._iniciar = function(){
+    
+    var self = this;
+    self.ele.on('click', '.btnAgregarActor', function(event) {
+        var actor_id = $(this).data('id');
+        
+        var dataFilm = ctnFilm.tblFilm.getIds();
+        var film_id  = dataFilm[0].film_id;
+
+        var url  = "/filmActor/insert";            
+        var data = { 'film_actor': { 'actor_id': actor_id, 'film_id': film_id}};
+        
+        CallRest.post(url, data, function(res)
+        {
+            if(res.result==1)
+            {                
+                Notificacions.success();                                    
+                self.llenarTablaFilmActors();
+            }else{
+                Notificacions.errors();
+            }
+        });
+
+
+    });
+
+    self.ele.on('click', '.btnQuitarActor', function(event){
+        var actor_id = $(this).data('id');
+        
+        var dataFilm = ctnFilm.tblFilm.getIds();
+        var film_id  = dataFilm[0].film_id;
+
+        var url  = "/filmActor/delete";            
+        var data = { 'film_actor': { 'actor_id': actor_id, 'film_id': film_id}};
+        
+        CallRest.post(url, data, function(res)
+        {
+            if(res.result==1)
+            {                
+                Notificacions.success();                                    
+                self.llenarTablaFilmActors();
+            }else{
+                Notificacions.errors();
+            }
+        });
+    });
+};
+
+ctnModalFilmActor.llenarTablaActors = function(res){
+
+    var self = this;
+    self.tblActor.clean(); // Limpia primeramente la tabla si es que tiene algun dato           
+
+    var url  = '/actor/list';
+    var data = '';
+
+    CallRest.post(url, data, function(res){
+        $.each(res.actors, function(index, actor) {
+            var row = "";
+            row += "<tr>";            
+            row += "    <td>"+actor.first_name+" "+actor.last_name+"</td>";
+            row += '    <td><button type="button" class="btn btn-sm btn-info btnAgregarActor" data-id="'+actor.actor_id+'">Agregar</button></td>';
+            row += "</tr>";
+
+            self.tblActor.append(row);                 
+        });
+
+        self.tblActor.simple();
+    });
+
+};
+
+ctnModalFilmActor.llenarTablaFilmActors = function(res){
+
+    var self = this;
+    self.tblFilmActor.clean(); // Limpia primeramente la tabla si es que tiene algun dato           
+
+    var url  = '/filmActor/list';
+    var data = { film:{ film_id: ctnFilm.tblFilm.getIds()[0].film_id } };
+
+    CallRest.post(url, data, function(res){
+        $.each(res.actors, function(index, actor) {
+            var row = "";
+            row += "<tr>";            
+            row += "    <td>"+actor.first_name+" "+actor.last_name+"</td>";
+            row += '    <td><button type="button" class="btn btn-sm btn-danger btnQuitarActor" data-id="'+actor.actor_id+'">Quitar</button></td>';
+            row += "</tr>";
+
+            self.tblFilmActor.append(row);                 
+        });
+
+        self.tblFilmActor.simple();
+    });
+
+};
+
+
+
+
+
+
+
 jQuery(document).ready(function($) {
 	
 	ctnFilm.init();
 	ctnBotonera.init();
 	ctnModalCrearFilm.init();
 	ctnModalEditarFilm.init();
+    ctnModalFilmActor.init();
+
 });
