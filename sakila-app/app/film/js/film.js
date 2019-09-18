@@ -1,11 +1,12 @@
 /*
 Creación de contenedores
  */
-var ctnFilm            = new ContainerJS("#ctnFilm");
-var ctnBotonera         = new ContainerJS("#ctnBotonera");
-var ctnModalCrearFilm  = new ContainerJS("#modalCrearFilm");
-var ctnModalEditarFilm = new ContainerJS("#modalEditarFilm");
-var ctnModalFilmActor = new ContainerJS("#modalFilmActor");
+var ctnFilm              = new ContainerJS("#ctnFilm");
+var ctnBotonera          = new ContainerJS("#ctnBotonera");
+var ctnModalCrearFilm    = new ContainerJS("#modalCrearFilm");
+var ctnModalEditarFilm   = new ContainerJS("#modalEditarFilm");
+var ctnModalFilmActor    = new ContainerJS("#modalFilmActor");
+var ctnModalFilmCategory = new ContainerJS("#modalFilmCategory");
 
 /*
 Creación de tablas y registrar a los contenedores
@@ -20,11 +21,18 @@ var tblFilmActor = new CDataTable('#tblFilmActor');
 ctnModalFilmActor.registerTable(tblFilmActor, 'tblFilmActor');
 
 
+
+
+var tblCategory = new CDataTable('#tblCategory');
+ctnModalFilmCategory.registerTable(tblCategory, 'tblCategory');
+
+
 /*
 Registrar Elementos a los contenedores
  */
 ctnModalCrearFilm.registerId('formCrearFilm', '$formCrearFilm');
 ctnModalEditarFilm.registerElement('#formEditarFilm', '$formEditarFilm');
+ctnModalFilmCategory.registerId('tblFilmCategory', '$tblFilmCategory');
 
 
 /*
@@ -193,9 +201,20 @@ ctnBotonera._iniciar = function(){
 
         if(ctnFilm.tblFilm.getIds().length>0){
             ctnModalFilmActor.ele.modal();
-            ctnModalFilmActor.ele.find("#txtNombrePelicula").val(ctnFilm.tblFilm.getData()[1]);
+            ctnModalFilmActor.ele.find("#txtNombrePelicula").html(ctnFilm.tblFilm.getData()[0][1]);
             ctnModalFilmActor.llenarTablaActors();
             ctnModalFilmActor.llenarTablaFilmActors();
+        }else{
+            Notificacions.warning("Seleccione una pelicula");
+        }
+    });
+
+    self.ele.find('#btnAgregarCategory').click(function(event) {
+        if(ctnFilm.tblFilm.getIds().length>0){
+            ctnModalFilmCategory.ele.modal();        
+            ctnModalFilmCategory.ele.find("#txtNombrePeliculaCategory").html(ctnFilm.tblFilm.getData()[0][1]);
+            ctnModalFilmCategory.llenarTablaCategory();
+            ctnModalFilmCategory.llenarTablaFilmCategories();
         }else{
             Notificacions.warning("Seleccione una pelicula");
         }
@@ -496,6 +515,103 @@ ctnModalFilmActor.llenarTablaFilmActors = function(res){
 
 
 
+
+
+
+ctnModalFilmCategory._iniciar = function(){
+    var self = this;
+    self.ele.on('click', '.btnAgregarCategory', function(event) { console.log(1111);
+        var category_id = $(this).data('id');
+        
+        var dataFilm = ctnFilm.tblFilm.getIds();
+        var film_id  = dataFilm[0].film_id;
+
+        var url  = "/filmCategory/insert";            
+        var data = { 'film_category': { 'category_id': category_id, 'film_id': film_id}};
+        
+        CallRest.post(url, data, function(res)
+        {
+            if(res.result==1)
+            {                
+                Notificacions.success();                                    
+                self.llenarTablaFilmCategories();
+            }else{
+                Notificacions.errors();
+            }
+        });
+
+
+    });
+
+    self.ele.on('click', '.btnQuitarCategory', function(event){
+        var category_id = $(this).data('id');
+        
+        var dataFilm = ctnFilm.tblFilm.getIds();
+        var film_id  = dataFilm[0].film_id;
+
+        var url  = "/filmCategory/delete";            
+        var data = { 'film_category': { 'category_id': category_id, 'film_id': film_id}};
+        
+        CallRest.post(url, data, function(res)
+        {
+            if(res.result==1)
+            {                
+                Notificacions.success();                                    
+                self.llenarTablaFilmCategories();
+            }else{
+                Notificacions.errors();
+            }
+        });
+    });
+};
+
+ctnModalFilmCategory.llenarTablaCategory = function(){
+
+    var self = this;
+    self.tblCategory.clean(); // Limpia primeramente la tabla si es que tiene algun dato           
+
+    var url  = '/category/list';
+    var data = '';
+
+    CallRest.post(url, data, function(res){
+        $.each(res.categories, function(index, category) {
+            var row = "";
+            row += "<tr>";            
+            row += "    <td>"+category.name+"</td>";
+            row += '    <td><button type="button" class="btn btn-sm btn-info btnAgregarCategory" data-id="'+category.category_id+'">Agregar</button></td>';
+            row += "</tr>";
+
+            self.tblCategory.append(row);                 
+        });
+
+        self.tblCategory.simple();
+    });
+
+};
+
+ctnModalFilmCategory.llenarTablaFilmCategories = function(){
+    var self = this;    
+    self.$tblFilmCategory.find('tbody').html('');
+    var url  = '/filmCategory/list';
+    var data = { film:{ film_id: ctnFilm.tblFilm.getIds()[0].film_id } };
+
+    CallRest.post(url, data, function(res){
+        $.each(res.categories, function(index, category) {
+            var row = "";
+            row += "<tr>";            
+            row += "    <td>"+category.name+"</td>";
+            row += '    <td><button type="button" class="btn btn-sm btn-danger btnQuitarCategory" data-id="'+category.category_id+'">Quitar</button></td>';
+            row += "</tr>";
+
+            self.$tblFilmCategory.append(row);                 
+        });
+        
+    });
+};
+
+
+
+
 jQuery(document).ready(function($) {
 	
 	ctnFilm.init();
@@ -503,5 +619,6 @@ jQuery(document).ready(function($) {
 	ctnModalCrearFilm.init();
 	ctnModalEditarFilm.init();
     ctnModalFilmActor.init();
+    ctnModalFilmCategory.init();
 
 });

@@ -23,7 +23,7 @@
                             <button type="button" class="btn btn-default btn-sm text-center" id="btnAgregarActores"> 
                                 <i class="glyphicon glyphicon-user"></i> <br>Agregar Actores
                             </button>
-                            <button type="button" class="btn btn-default btn-sm text-center" id="btnAgregarActores"> 
+                            <button type="button" class="btn btn-default btn-sm text-center" id="btnAgregarCategory"> 
                                 <i class="glyphicon glyphicon-tag"></i> <br>Agregar Categorias
                             </button>
                         </div>
@@ -321,7 +321,7 @@
                 <form id="formEditarFilm" action="index_submit" method="post" class="form-horizontal">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">AGREGAR ACTORES A PELICULA <span id="txtNombrePelicula"></span></h4>
+                        <h4 class="modal-title">AGREGAR ACTORES A PELICULA "<span id="txtNombrePelicula"></span>"</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">                            
@@ -354,8 +354,70 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>         
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>                        
+                        <input type="hidden" name="film[film_id]" value="">               
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalFilmCategory" role="dialog" >
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content ">
+                <form id="formEditarFilmCategory" action="index_submit" method="post" class="form-horizontal">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">AGREGAR CATEGORIAS A PELICULA "<span id="txtNombrePeliculaCategory"></span>"</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">                            
+                            <div class="col-md-6">
+                                <p>Lista de Categorias asignadas a la pelicula</p>
+                                <table id="tblFilmCategory" class="table table-hover" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th data-priority="1">Categoria</th>
+                                            <th data-priority="2">Opción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <p>Lista de actores</p>
+                                <table id="tblCategory" class="table table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>                                            
+                                            <th data-priority="1">Categoria</th>
+                                            <th data-priority="2">Opción</th>                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>                        
                         <input type="hidden" name="film[film_id]" value="">               
                     </div>
                 </form>
