@@ -91,7 +91,7 @@
         </div>          
     </div>
     <div class="col-md-10" id="contenedorIframes">
-        <iframe id="ifrm" width="100%" src="http://192.168.56.2/kerp/movil/recibida-interna-sin.php" frameborder="0" allowfullscreen ></iframe>
+        <iframe id="ifrm" width="100%" src="" frameborder="0" allowfullscreen ></iframe>
     </div>
     <footer class="pull-left footer">
         <p class="col-md-12">
@@ -132,7 +132,7 @@
 
 
     <!-- Componentes -->
-    <script src="../../public/components/ContainerJS.js" type="text/javascript"></script>
+    <script src="../../public/core/ContainerJS.js" type="text/javascript"></script>
     <script src="../../public/components/CallRest.js" type="text/javascript"></script>
     <script src="../../public/components/CorrectorIframe.js" type="text/javascript"></script>
 
